@@ -19,7 +19,10 @@ class UserGuestbookEntryDeleteActionRecycleBinListener implements EventListener 
 	public function execute($eventObj, $className, $eventName) {
 		if (GUESTBOOK_ENABLE_RECYCLE_BIN && !$eventObj->entry->isDeleted) {
 			$sql = "UPDATE	wcf".WCF_N."_user_guestbook
-				SET	isDeleted = 1
+				SET	isDeleted = 1,
+					deleteTime = ".TIME_NOW.",
+					deletedBy = '".escapeString(WCF::getUser()->username)."'
+					deletedByID = ".WCF::getUser()->userID."
 				WHERE	entryID = ".$eventObj->entry->entryID;
 			WCF::getDB()->sendQuery($sql);
 			
