@@ -1,0 +1,1 @@
+ALTER TABLE wcf1_user_guestbook ADD COLUMN isDeleted TINYINT(1) NOT NULL DEFAULT 0 AFTER time;

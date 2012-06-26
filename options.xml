@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/options.xsd">
+	<import>
+		<categories>
+			<category name="user.profile.guestbook">
+				<parent>user.profile</parent>
+				<options>module_user_guestbook</options>
+			</category>
+		</categories>
+		<options>
+			<option name="guestbook_enable_recycle_bin">
+				<categoryname>user.profile.guestbook</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<enableoptions>guestbook_empty_recycle_bin_cycle,guestbook_enable_deleted_entry_note</enableoptions>
+				<showorder>1</showorder>
+			</option>
+			<option name="guestbook_empty_recycle_bin_cycle">
+				<categoryname>user.profile.guestbook</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>30</defaultvalue>
+				<showorder>2</showorder>
+			</option>
+			<option name="guestbook_enable_deleted_entry_note">
+				<categoryname>user.profile.guestbook</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<showorder>3</showorder>
+			</option>
+		</options>
+	</import>
+</data>
