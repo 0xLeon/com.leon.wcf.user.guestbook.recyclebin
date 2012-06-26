@@ -17,7 +17,7 @@ class UserGuestbookPageRecycleBinListener implements EventListener {
 	 * @see EventListener::execute()
 	 */
 	public function execute($eventObj, $className, $eventName) {
-		if (($eventObj->frame->getUserID() != WCF::getUser()->userID) || !GUESTBOOK_ENABLE_DELETED_ENTRY_NOTE || !WCF::getUser()->getPermission('mod.guestbook.canReadDeletedEntry')) {
+		if (($eventObj->frame->getUserID() != WCF::getUser()->userID) || !GUESTBOOK_ENABLE_DELETED_ENTRY_NOTE || !WCF::getUser()->getPermission('mod.guestbook.canDeletedEntry')) {
 			$eventObj->entryList->sqlConditions .= ' AND user_guestbook.isDeleted = 0';
 		}
 	}
