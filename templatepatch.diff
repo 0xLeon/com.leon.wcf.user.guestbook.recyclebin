@@ -10,7 +10,7 @@
 +					{/if}
 +					
 +					{if !$entry->isDeleted || $canReadDeletedEntry}
-+					<div class="messageWrapper">
++					<div id="entryRow{@$entry->entryID}"{if $entry->isDeleted} style="display: none;"{/if}>
  					<div class="message">
  						<div class="messageInner {if $entry->commentTime > 0}{cycle advance=false values='container-1,container-2'}{else}{cycle values='container-1,container-2'}{/if}">
 +							{if !$entry->isDeleted}
@@ -33,7 +33,7 @@
 +								<a id="entry{@$entry->entryID}"></a>
 +								<img src="{icon}postTrashM.png{/icon}" alt="" />
 +								<p class="userCredits smallFont light">
-+									<a onclick="showContent('entry{@$entry->entryID}', 'hiddenEntryInfo{@$entry->entryID}')" title="{lang}wcf.user.guestbook.showEntry{/lang}">
++									<a onclick="showContent('entryRow{@$entry->entryID}', 'hiddenEntryInfo{@$entry->entryID}')" title="{lang}wcf.user.guestbook.showEntry{/lang}">
 +										<span>{lang}wcf.user.guestbook.deletedEntry{/lang}</span>
 +									</a>
 +								</p>
