@@ -1,5 +1,5 @@
---- /d/Programmierung/Websoftware/WCF & WBB/Work/Lern-Pakete/com.woltlab.wcf.user.guestbook/templates/userGuestbook.tpl	Mon Mar  7 18:40:42 2011
-+++ /c/Users/Stefan/git/com.leon.wcf.user.guestbook.recyclebin/templatepatch/userGuestbook.tpl	Tue Jun 26 12:21:21 2012
+--- a/userGuestbook.tpl	Mon Mar  7 18:40:42 2011
++++ b/userGuestbook.tpl	Tue Jun 26 12:21:21 2012
 @@ -56,9 +56,16 @@
  						//]]>
  					</script>
@@ -13,8 +13,9 @@
 +					<div class="messageWrapper">
  					<div class="message">
  						<div class="messageInner {if $entry->commentTime > 0}{cycle advance=false values='container-1,container-2'}{else}{cycle values='container-1,container-2'}{/if}">
--							<a id="entry{@$entry->entryID}"></a>
-+							{if !$entry->isDeleted}<a id="entry{@$entry->entryID}"></a>{/if}
++							{if !$entry->isDeleted}
+							<a id="entry{@$entry->entryID}"></a>
++							{/if}
  							<div class="messageHeader">
  								<p class="messageCount">
  									<a href="index.php?page=UserGuestbook&amp;userID={@$userID}&amp;entryID={@$entry->entryID}{@SID_ARG_2ND}#entry{@$entry->entryID}" title="{lang}wcf.user.guestbook.entry.permalink{/lang}" class="messageNumber">{#$messageNumber}</a>
