@@ -37,6 +37,10 @@ class UserGuestbookEntryTrashAction extends AbstractUserGuestbookEntryAction {
 				deleteTime = ".TIME_NOW.",
 				deletedBy = '".escapeString(WCF::getUser()->username)."'
 				deletedByID = ".WCF::getUser()->userID."
+				commentIsDeleted = 1,
+				commentDeleteTime = ".TIME_NOW.",
+				commentDeletedBy = '".escapeString(WCF::getUser()->username)."'
+				commentDeletedByID = ".WCF::getUser()->userID."
 			WHERE	entryID = ".$eventObj->entry->entryID;
 		WCF::getDB()->sendQuery($sql);
 		
