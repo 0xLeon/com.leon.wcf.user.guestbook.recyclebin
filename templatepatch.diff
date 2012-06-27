@@ -1,6 +1,6 @@
 --- a/userGuestbook.tpl	Mon Mar  7 18:40:42 2011
-+++ b/userGuestbook.tpl	Tue Jun 26 12:21:21 2012
-@@ -56,9 +56,16 @@
++++ b/userGuestbook.tpl	Wed Jun 27 10:18:14 2012
+@@ -56,9 +56,18 @@
  						//]]>
  					</script>
  					
@@ -14,16 +14,55 @@
  					<div class="message">
  						<div class="messageInner {if $entry->commentTime > 0}{cycle advance=false values='container-1,container-2'}{else}{cycle values='container-1,container-2'}{/if}">
 +							{if !$entry->isDeleted}
-							<a id="entry{@$entry->entryID}"></a>
+ 							<a id="entry{@$entry->entryID}"></a>
 +							{/if}
  							<div class="messageHeader">
  								<p class="messageCount">
  									<a href="index.php?page=UserGuestbook&amp;userID={@$userID}&amp;entryID={@$entry->entryID}{@SID_ARG_2ND}#entry{@$entry->entryID}" title="{lang}wcf.user.guestbook.entry.permalink{/lang}" class="messageNumber">{#$messageNumber}</a>
-@@ -146,6 +153,24 @@
+@@ -96,6 +105,8 @@
+ 							<hr />
+ 						</div>
+ 					</div>
++					</div>
++					{/if}
+ 					{if $entry->commentTime > 0}
+ 						<script type="text/javascript">
+ 							//<![CDATA[
+@@ -107,9 +118,13 @@
+ 							//]]>
+ 						</script>
+ 						
++						{if !$entry->commentIsDeleted || ($entry->commentIsDeleted && !$entry->isDeleted && $canReadDeletedEntry)}
++						<div id="commentRow{@$entry->entryID}"{if $entry->commentIsDeleted} style="display: none;"{/if}>
+ 						<div class="message messageAnswer">
+ 							<div class="messageInner {cycle values='container-1,container-2'}">
++								{if !$entry->commentIsDeleted || $entry->isDeleted}
+ 								<a id="comment{@$entry->entryID}"></a>
++								{/if}
+ 								<div class="messageHeader">
+ 									<p class="messageCount">
+ 										<a href="index.php?page=UserGuestbook&amp;userID={@$userID}&amp;entryID={@$entry->entryID}{@SID_ARG_2ND}#comment{@$entry->entryID}" title="{lang}wcf.user.guestbook.entry.comment.permalink{/lang}" class="messageNumber">{#$messageNumber}</a>
+@@ -145,7 +160,40 @@
+ 								<hr />
  							</div>
  						</div>
- 					{/if}
-+					</div>
++						</div>
++						{/if}
++						
++						{if !$entry->isDeleted && $entry->commentIsDeleted && $canReadDeletedEntry}
++							{cycle name=commentCycle print=false}
++							<div class="message messageMinimized" id="hiddenCommentInfo{@$entry->entryID}">
++								<div class="messageInner container-{cycle name=commentCycle}">
++									<a id="comment{@$entry->entryID}"></a>
++									<img src="{icon}postTrashM.png{/icon}" alt="" />
++									<p class="userCredits smallFont light">
++										<a onclick="showContent('commentRow{@$entry->entryID}', 'hiddenCommentInfo{@$entry->entryID}')" title="{lang}wcf.user.guestbook.showComment{/lang}">
++											<span>{lang}wcf.user.guestbook.deletedComment{/lang}</span>
++										</a>
++									</p>
++								</div>
++							</div>
++						{/if}
 +					{/if}
 +					
 +					{if $entry->isDeleted && $canReadDeletedEntry}
@@ -39,7 +78,7 @@
 +								</p>
 +							</div>
 +						</div>
-+					{/if}
+ 					{/if}
 +					
  					{assign var='messageNumber' value=$messageNumber-1}
  				{/foreach}
