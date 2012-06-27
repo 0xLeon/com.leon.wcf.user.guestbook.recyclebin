@@ -11,8 +11,8 @@
 		</eventlistener>
 		<eventlistener>
 			<eventclassname>UserGuestbookEntryDeleteAction</eventclassname>
-			<eventname>execute</eventname>
-			<listenerclassfile>lib/system/event/listener/UserGuestbookEntryDeleteAction.class.php</listenerclassfile>
+			<eventname>readParameters</eventname>
+			<listenerclassfile>lib/system/event/listener/UserGuestbookEntryDeleteActionRecycleBinListener.class.php</listenerclassfile>
 			<environment>user</environment>
 			<inherit>0</inherit>
 			<nice>0</nice>

@@ -1,6 +1,7 @@
 <?php
 // wcf imports
 require_once(WCF_DIR.'lib/system/event/EventListener.class.php');
+require_once(WCF_DIR.'lib/action/UserGuestbookEntryTrashAction.class.php');
 
 /**
  * Handles user guestbook entry recycle bin during deletion
@@ -18,18 +19,7 @@ class UserGuestbookEntryDeleteActionRecycleBinListener implements EventListener 
 	 */
 	public function execute($eventObj, $className, $eventName) {
 		if (GUESTBOOK_ENABLE_RECYCLE_BIN && !$eventObj->entry->isDeleted && WCF::getUser()->getPermission('mod.guestbook.canTrashEntry')) {
-			$sql = "UPDATE	wcf".WCF_N."_user_guestbook
-				SET	isDeleted = 1,
-					deleteTime = ".TIME_NOW.",
-					deletedBy = '".escapeString(WCF::getUser()->username)."'
-					deletedByID = ".WCF::getUser()->userID."
-				WHERE	entryID = ".$eventObj->entry->entryID;
-			WCF::getDB()->sendQuery($sql);
-			
-			$eventObj->executed();
-			
-			HeaderUtil::redirect('index.php?page=UserGuestbook&userID='.$eventObj->entry->ownerID.'&entryID='.$eventObj->entry->entryID.SID_ARG_2ND_NOT_ENCODED.'#entry'.$eventObj->entry->entryID);
-			exit;
+			new UserGuestbookEntryTrashAction();
 		}
 	}
 }
