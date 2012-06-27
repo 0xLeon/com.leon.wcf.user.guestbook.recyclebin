@@ -4,7 +4,7 @@
 		<eventlistener>
 			<eventclassname>UserGuestbookPage</eventclassname>
 			<eventname>readData</eventname>
-			<listenerclassfile>lib/system/event/listener/UserGuestbookPagerecycleBinListener.class.php</listenerclassfile>
+			<listenerclassfile>lib/system/event/listener/UserGuestbookPageRecycleBinListener.class.php</listenerclassfile>
 			<environment>user</environment>
 			<inherit>0</inherit>
 			<nice>0</nice>
