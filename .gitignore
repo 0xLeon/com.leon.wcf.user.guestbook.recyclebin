@@ -60,5 +60,6 @@ requirements/*.tar.gz
 
 # Stuff
 screenshots/
+templatepatch/
 project.diff
 project.log
