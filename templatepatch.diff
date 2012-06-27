@@ -79,7 +79,6 @@
 +							</div>
 +						</div>
  					{/if}
-+					
  					{assign var='messageNumber' value=$messageNumber-1}
  				{/foreach}
  			</div>
