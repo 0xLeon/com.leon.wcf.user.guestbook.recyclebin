@@ -8,18 +8,15 @@
 		<date>2012-06-26</date>
 		<isunique>1</isunique>
 		<standalone>0</standalone>
-		<plugin>com.leon.wcf.user.guestbook</plugin>
+		<plugin>com.woltlab.wcf.user.guestbook</plugin>
 	</packageinformation>
 	<authorinformation>
 		<author><![CDATA[Stefan Hahn]]></author>
 		<authorurl><![CDATA[https://github.com/Leon-]]></authorurl>
 	</authorinformation>
 	<requiredpackages>
-		<requiredpackage>com.leon.wcf.user.guestbook</requiredpackage>
+		<requiredpackage>com.woltlab.wcf.user.guestbook</requiredpackage>
 	</requiredpackages>
-	<optionalpackages>
-		<optionalpackage minVersion="" file=""></optionalpackage>
-	</optionalpackages>
 	<instructions type="install">
 		<files>files.tar</files>
 		<sql>install.sql</sql>
