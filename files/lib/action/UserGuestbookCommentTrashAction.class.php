@@ -23,7 +23,7 @@ class UserGuestbookCommentTrashAction extends AbstractUserGuestbookEntryAction {
 			throw new IllegalLinkException();
 		}
 		
-		if (WCF::getUser()->getPermission('mod.guestbook.canTrashEntry')) {
+		if (!WCF::getUser()->getPermission('mod.guestbook.canTrashEntry')) {
 			throw new PermissionDeniedException();
 		}
 	}
@@ -35,9 +35,9 @@ class UserGuestbookCommentTrashAction extends AbstractUserGuestbookEntryAction {
 		$sql = "UPDATE	wcf".WCF_N."_user_guestbook
 			SET	commentIsDeleted = 1,
 				commentDeleteTime = ".TIME_NOW.",
-				commentDeletedBy = '".escapeString(WCF::getUser()->username)."'
+				commentDeletedBy = '".escapeString(WCF::getUser()->username)."',
 				commentDeletedByID = ".WCF::getUser()->userID."
-			WHERE	entryID = ".$eventObj->entry->entryID;
+			WHERE	entryID = ".$this->entry->entryID;
 		WCF::getDB()->sendQuery($sql);
 		
 		$this->executed();

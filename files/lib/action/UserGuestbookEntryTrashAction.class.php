@@ -23,7 +23,7 @@ class UserGuestbookEntryTrashAction extends AbstractUserGuestbookEntryAction {
 			throw new IllegalLinkException();
 		}
 		
-		if (WCF::getUser()->getPermission('mod.guestbook.canTrashEntry')) {
+		if (!WCF::getUser()->getPermission('mod.guestbook.canTrashEntry')) {
 			throw new PermissionDeniedException();
 		}
 	}
@@ -32,16 +32,17 @@ class UserGuestbookEntryTrashAction extends AbstractUserGuestbookEntryAction {
 	 * @see Action::execute()
 	 */
 	public function execute() {
+		// TODO: only trash comment when there is one
 		$sql = "UPDATE	wcf".WCF_N."_user_guestbook
 			SET	isDeleted = 1,
 				deleteTime = ".TIME_NOW.",
-				deletedBy = '".escapeString(WCF::getUser()->username)."'
-				deletedByID = ".WCF::getUser()->userID."
+				deletedBy = '".escapeString(WCF::getUser()->username)."',
+				deletedByID = ".WCF::getUser()->userID.",
 				commentIsDeleted = 1,
 				commentDeleteTime = ".TIME_NOW.",
-				commentDeletedBy = '".escapeString(WCF::getUser()->username)."'
+				commentDeletedBy = '".escapeString(WCF::getUser()->username)."',
 				commentDeletedByID = ".WCF::getUser()->userID."
-			WHERE	entryID = ".$eventObj->entry->entryID;
+			WHERE	entryID = ".$this->entry->entryID;
 		WCF::getDB()->sendQuery($sql);
 		
 		$this->executed();
