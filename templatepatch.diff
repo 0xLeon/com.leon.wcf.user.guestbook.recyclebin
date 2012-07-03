@@ -1,5 +1,5 @@
---- a/userGuestbook.tpl	Mon Mar  7 18:40:42 2011
-+++ b/userGuestbook.tpl	Wed Jun 27 10:18:14 2012
+--- a/userGuestbook.tpl
++++ b/userGuestbook.tpl
 @@ -56,9 +56,18 @@
  						//]]>
  					</script>
@@ -19,7 +19,17 @@
  							<div class="messageHeader">
  								<p class="messageCount">
  									<a href="index.php?page=UserGuestbook&amp;userID={@$userID}&amp;entryID={@$entry->entryID}{@SID_ARG_2ND}#entry{@$entry->entryID}" title="{lang}wcf.user.guestbook.entry.permalink{/lang}" class="messageNumber">{#$messageNumber}</a>
-@@ -96,6 +105,8 @@
+@@ -86,6 +95,9 @@
+ 										{if $entry->isCommentable() && !$entry->commentTime}<li><a href="index.php?form=UserGuestbookCommentAdd&amp;entryID={@$entry->entryID}{@SID_ARG_2ND}#profileContent" title="{lang}wcf.user.guestbook.entry.comment.add{/lang}"><img src="{icon}guestbookCommentS.png{/icon}" alt="" /> <span>{lang}wcf.user.guestbook.button.entry.comment.add{/lang}</span></a></li>{/if}
+ 										{if $entry->isEditable()}<li><a href="index.php?form=UserGuestbookEntryEdit&amp;entryID={@$entry->entryID}{@SID_ARG_2ND}#profileContent" title="{lang}wcf.user.guestbook.entry.edit{/lang}"><img src="{icon}editS.png{/icon}" alt="" /> <span>{lang}wcf.global.button.edit{/lang}</span></a></li>{/if}
+ 										{if $entry->isDeletable()}<li><a href="index.php?action=UserGuestbookEntryDelete&amp;entryID={@$entry->entryID}&amp;t={@SECURITY_TOKEN}{@SID_ARG_2ND}" onclick="return confirm('{lang}wcf.user.guestbook.entry.delete.sure{/lang}')" title="{lang}wcf.user.guestbook.entry.delete{/lang}"><img src="{icon}deleteS.png{/icon}" alt="" /> <span>{lang}wcf.global.button.delete{/lang}</span></a></li>{/if}
++										{if GUESTBOOK_ENABLE_RECYCLE_BIN && !$entry->isDeleted && $this->user->getPermission('mod.guestbook.canTrashEntry')}
++											<li><a href="index.php?action=UserGuestbookEntryTrash&amp;entryID={@$entry->entryID}&amp;t={@SECURITY_TOKEN}{@SID_ARG_2ND}" onclick="return confirm('{lang}wcf.user.guestbook.entry.trash.sure{/lang}')" title="{lang}wcf.user.guestbook.entry.trash{/lang}"><img src="{icon}deleteS.png{/icon}" /> <span>{lang}wcf.user.guestbook.button.entry.trash{/lang}</span></a></li>
++										{/if}
+ 										{if MODULE_USER_INFRACTION == 1 && $entry->userID && $this->user->getPermission('admin.user.infraction.canWarnUser')}
+ 											<li><a href="index.php?form=UserWarn&amp;userID={@$entry->userID}&amp;objectType=userGuestbookEntry&amp;objectID={@$entry->entryID}{@SID_ARG_2ND}" title="{lang}wcf.user.infraction.button.warn{/lang}"><img src="{icon}infractionWarningS.png{/icon}" alt="" /> <span>{lang}wcf.user.infraction.button.warn{/lang}</span></a></li>
+ 										{/if}
+@@ -96,6 +108,8 @@
  							<hr />
  						</div>
  					</div>
@@ -28,7 +38,7 @@
  					{if $entry->commentTime > 0}
  						<script type="text/javascript">
  							//<![CDATA[
-@@ -107,9 +118,13 @@
+@@ -107,9 +121,13 @@
  							//]]>
  						</script>
  						
@@ -42,7 +52,17 @@
  								<div class="messageHeader">
  									<p class="messageCount">
  										<a href="index.php?page=UserGuestbook&amp;userID={@$userID}&amp;entryID={@$entry->entryID}{@SID_ARG_2ND}#comment{@$entry->entryID}" title="{lang}wcf.user.guestbook.entry.comment.permalink{/lang}" class="messageNumber">{#$messageNumber}</a>
-@@ -145,7 +160,40 @@
+@@ -137,6 +155,9 @@
+ 											<li class="extraButton"><a href="#top" title="{lang}wcf.global.scrollUp{/lang}"><img src="{icon}upS.png{/icon}" alt="" /> <span class="hidden">{lang}wcf.global.scrollUp{/lang}</span></a></li>
+ 											{if $entry->commentIsEditable()}<li><a href="index.php?form=UserGuestbookCommentEdit&amp;entryID={@$entry->entryID}{@SID_ARG_2ND}#profileContent" title="{lang}wcf.user.guestbook.entry.comment.edit{/lang}"><img src="{icon}editS.png{/icon}" alt="" /> <span>{lang}wcf.global.button.edit{/lang}</span></a></li>{/if}
+ 											{if $entry->commentIsDeletable()}<li><a href="index.php?action=UserGuestbookCommentDelete&amp;entryID={@$entry->entryID}&amp;t={@SECURITY_TOKEN}{@SID_ARG_2ND}" onclick="return confirm('{lang}wcf.user.guestbook.entry.comment.delete.sure{/lang}')" title="{lang}wcf.user.guestbook.entry.comment.delete{/lang}"><img src="{icon}deleteS.png{/icon}" alt="" /> <span>{lang}wcf.global.button.delete{/lang}</span></a></li>{/if}
++											{if GUESTBOOK_ENABLE_RECYCLE_BIN && !$entry->commentIsDeleted && $this->user->getPermission('mod.guestbook.canTrashEntry')}
++												<li><a href="index.php?action=UserGuestbookCommentTrash&amp;entryID={@$entry->entryID}&amp;t={@SECURITY_TOKEN}{@SID_ARG_2ND}" onclick="return confirm('{lang}wcf.user.guestbook.entry.comment.trash.sure{/lang}')" title="{lang}wcf.user.guestbook.entry.comment.trash{/lang}"><img src="{icon}deleteS.png{/icon}" /> <span>{lang}wcf.user.guestbook.button.entry.comment.trash{/lang}</span></a></li>
++											{/if}
+ 											{if $additionalCommentSmallButtons.$entryID|isset}{@$additionalCommentSmallButtons.$entryID}{/if}
+ 										</ul>
+ 									</div>
+@@ -145,7 +166,40 @@
  								<hr />
  							</div>
  						</div>
